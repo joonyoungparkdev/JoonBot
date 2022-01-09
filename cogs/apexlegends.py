@@ -6,6 +6,10 @@ class Apex(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+    @commands.command(aliases=['APEX', 'Apex Legends', 'apex legends'])
+    async def apex(self, ctx):
+        await ctx.send(":dog: :poop: game")
+
     @commands.command(aliases=['gibby', 'Gibraltar'])
     async def gibraltar(self, ctx):
         await ctx.send("ALL my homies hate Gibby")

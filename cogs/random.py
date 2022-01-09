@@ -7,8 +7,6 @@ import random
 
 from discord.ext import commands
 from discord.utils import get
-from discord import Spotify
-from secrets import spotify_token, spotify_user_id
 
 
 class Random(commands.Cog):
