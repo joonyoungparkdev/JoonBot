@@ -1,2 +1,2 @@
 worker: python my_bot.py
-web: gunicorn
+web: python my_bot.py
