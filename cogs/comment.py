@@ -23,6 +23,10 @@ class Comment(commands.Cog):
     async def where(self, ctx):
         await ctx.send("https://memegenerator.net/img/instances/61599036.jpg")
 
+    @commands.command(aliases=['KEKW'])
+    async def kekw(self, ctx):
+        await ctx.send("https://tenor.com/view/kekw-kek-bttv-twitch-emote-gif-15123134")
+
 
 def setup(client):
     client.add_cog(Comment(client))
