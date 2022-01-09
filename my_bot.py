@@ -3,7 +3,6 @@
 import discord
 import os
 import json
-import requests
 import builtins
 
 from discord.ext import commands
