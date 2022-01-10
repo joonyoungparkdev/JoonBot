@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from discord.utils import get
 
+apex_counter = 0  # global variable
+
 
 class Scanner(commands.Cog):
     def __init__(self, client):
@@ -11,7 +13,12 @@ class Scanner(commands.Cog):
     async def on_message(self, payload: discord.Message):
         if 'apex legends' in payload.content.lower():
             # print("Found!")
-            await payload.channel.send(":poop:")
+            global apex_counter
+            apex_counter += 1
+            if apex_counter > 1:
+                await payload.channel.send(":dog::poop: has been mentioned " + str(apex_counter) + " times")
+            else:
+                await payload.channel.send(":dog::poop: has been mentioned " + str(apex_counter) + " time")
         # print(payload.content)
 
 

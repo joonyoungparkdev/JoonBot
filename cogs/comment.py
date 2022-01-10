@@ -27,6 +27,10 @@ class Comment(commands.Cog):
     async def kekw(self, ctx):
         await ctx.send("https://tenor.com/view/kekw-kek-bttv-twitch-emote-gif-15123134")
 
+    @commands.command(aliases=['RunIt', 'RUNIT'])
+    async def runit(self, ctx):
+        await ctx.send("Valorant?")
+
 
 def setup(client):
     client.add_cog(Comment(client))

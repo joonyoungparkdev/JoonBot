@@ -1,9 +1,7 @@
 # Joon Bot
 
-import discord
 import os
-import json
-import builtins
+
 
 from discord.ext import commands
 
