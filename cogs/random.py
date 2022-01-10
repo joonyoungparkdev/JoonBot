@@ -1,8 +1,3 @@
-import discord
-import os
-import json
-import requests
-import builtins
 import random
 
 from discord.ext import commands

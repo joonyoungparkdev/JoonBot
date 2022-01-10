@@ -7,7 +7,7 @@ import builtins
 
 from discord.ext import commands
 
-client = commands.Bot(command_prefix='.')
+client = commands.Bot(command_prefix='!')
 
 # ex: '.load example'
 @client.command()
