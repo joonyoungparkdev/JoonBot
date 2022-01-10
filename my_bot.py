@@ -9,6 +9,12 @@ from discord.ext import commands
 
 client = commands.Bot(command_prefix='!')
 
+
+@client.event
+async def on_ready():
+    print('Bot is Ready')
+
+
 # ex: '.load example'
 @client.command()
 async def load(ctx, extension):
