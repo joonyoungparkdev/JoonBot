@@ -10,9 +10,9 @@ class Scanner(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, payload: discord.Message):
         if 'apex legends' in payload.content.lower():
-            print("Found!")
+            # print("Found!")
             await payload.channel.send(":poop:")
-        print(payload.content)
+        # print(payload.content)
 
 
 def setup(client):
