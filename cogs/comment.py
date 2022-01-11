@@ -10,20 +10,20 @@ class Comment(commands.Cog):
     async def yourself(self, ctx):
         await ctx.send('https://tenor.com/view/congrats-djkhlaed-player-yourself-foolingyourself-gif-4961672')
 
-    @commands.command(aliases=['fuck', 'fuckthisshit', 'FUCK', 'FUCKTHISSHIT'])
+    @commands.command(aliases=['fuck', 'fuckthisshit'])
     async def curse(self, ctx):
         await ctx.send("THAT'S RIGHT, FUCK THIS SHIT")
 
-    @commands.command(aliases=['LETSFUCKINGGO', 'letsfuckinggo', 'LFG'])
+    @commands.command(aliases=['letsfuckinggo'])
     async def lfg(self, ctx):
         await ctx.send("LET'S FUCKING GO!")
         await ctx.send("https://tenor.com/view/lfg-ruj-tits-lets-fucking-go-lets-go-gif-15383476")
 
-    @commands.command(aliases=['WHERE', 'whereheat'])
+    @commands.command(aliases=['whereheat'])
     async def where(self, ctx):
         await ctx.send("https://memegenerator.net/img/instances/61599036.jpg")
 
-    @commands.command(aliases=['KEKW'])
+    @commands.command()
     async def kekw(self, ctx):
         await ctx.send("https://tenor.com/view/kekw-kek-bttv-twitch-emote-gif-15123134")
 
