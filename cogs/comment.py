@@ -33,6 +33,10 @@ class Comment(commands.Cog):
         await ctx.send("https://tenor.com/view/damn-shookt-shocked-gif-5580082")
 
     @commands.command()
+    async def nice(self, ctx):
+        await ctx.send("https://tenor.com/view/noice-nice-click-gif-8843762")
+
+    @commands.command()
     async def runit(self, ctx):
         searched_role = get(ctx.guild.roles, name='Radiants')
         await ctx.send(searched_role.mention + " run it?")
