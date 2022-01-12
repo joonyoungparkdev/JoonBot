@@ -37,6 +37,13 @@ class Comment(commands.Cog):
         await ctx.send("https://tenor.com/view/noice-nice-click-gif-8843762")
 
     @commands.command()
+    async def calendar(self, ctx):
+        await ctx.send("1/10: First Day of Classes\n"
+                       "1/17: No School\n"
+                       "3/14 - 3/18: Spring Break\n"
+                       "5/1 - 5/5 : Finals Week")
+
+    @commands.command()
     async def runit(self, ctx):
         searched_role = get(ctx.guild.roles, name='Radiants')
         await ctx.send(searched_role.mention + " run it?")
