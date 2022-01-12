@@ -2,7 +2,7 @@
 
 import os
 
-
+import discord
 from discord.ext import commands
 
 client = commands.Bot(command_prefix='!', case_insensitive=True)
@@ -11,6 +11,7 @@ client = commands.Bot(command_prefix='!', case_insensitive=True)
 @client.event
 async def on_ready():
     print('Bot is Ready')
+    await client.change_presence(activity=discord.Game('With Myself'))
 
 
 # ex: '.load example'
