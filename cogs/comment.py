@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord.utils import get
 
 
 class Comment(commands.Cog):
@@ -26,6 +27,15 @@ class Comment(commands.Cog):
     @commands.command()
     async def kekw(self, ctx):
         await ctx.send("https://tenor.com/view/kekw-kek-bttv-twitch-emote-gif-15123134")
+
+    @commands.command()
+    async def damn(self, ctx):
+        await ctx.send("https://tenor.com/view/damn-shookt-shocked-gif-5580082")
+
+    @commands.command()
+    async def runit(self, ctx):
+        searched_role = get(ctx.guild.roles, name='Radiants')
+        await ctx.send(searched_role.mention + " run it?")
 
 
 def setup(client):
