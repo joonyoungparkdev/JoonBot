@@ -11,7 +11,7 @@ class Scanner(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, payload: discord.Message):
-        if 'apex legends' or 'apex' in payload.content.lower():
+        if 'apex legends' in payload.content.lower():
             # print("Found!")
             global apex_counter
             apex_counter += 1
