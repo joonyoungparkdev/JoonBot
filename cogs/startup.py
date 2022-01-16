@@ -13,8 +13,8 @@ class Startup(commands.Cog):
         await ctx.send('Pong!')
 
     @commands.command()
-    async def echo(self, ctx, output=""):
-        await ctx.send(output)
+    async def echo(self, ctx, *, args):
+        await ctx.send(args)
 
     @commands.command()
     async def clear(self, ctx, amount=5):
