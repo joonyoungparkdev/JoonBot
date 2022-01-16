@@ -21,7 +21,7 @@ class Scanner(commands.Cog):
 
                 apex_data = await data_channel.fetch_message(932024492295872522)
                 # print(apex_data)
-                counter = int(apex_data.content)     # add one to the count and store as new var
+                counter = int(apex_data.content) + 1     # add one to the count and store as new var
                 await apex_data.edit(content=str(counter))
                 # print(scanlist)
 

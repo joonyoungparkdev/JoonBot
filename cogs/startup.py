@@ -13,6 +13,10 @@ class Startup(commands.Cog):
         await ctx.send('Pong!')
 
     @commands.command()
+    async def echo(self, ctx, output=""):
+        await ctx.send(output)
+
+    @commands.command()
     async def clear(self, ctx, amount=5):
         await ctx.channel.purge(limit=amount+1)
 
