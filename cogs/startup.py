@@ -1,4 +1,6 @@
 import discord
+import time
+
 from discord.ext import commands
 
 
@@ -19,6 +21,11 @@ class Startup(commands.Cog):
     @commands.command()
     async def clear(self, ctx, amount=5):
         await ctx.channel.purge(limit=amount+1)
+
+    @commands.command()
+    async def countdown(self, ctx, minutes):
+        time.sleep(int(minutes)*60)
+        await ctx.send('Time is up')
 
 
 def setup(client):
