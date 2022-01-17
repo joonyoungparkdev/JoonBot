@@ -4,7 +4,7 @@ import time
 from discord.ext import commands
 
 
-class Startup(commands.Cog):
+class Tools(commands.Cog):
 
     def __init__(self, client):
         self.client = client
@@ -32,4 +32,4 @@ class Startup(commands.Cog):
 
 
 def setup(client):
-    client.add_cog(Startup(client))
+    client.add_cog(Tools(client))
