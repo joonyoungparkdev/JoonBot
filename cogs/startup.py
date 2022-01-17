@@ -23,9 +23,12 @@ class Startup(commands.Cog):
         await ctx.channel.purge(limit=amount+1)
 
     @commands.command()
-    async def countdown(self, ctx, minutes):
-        time.sleep(int(minutes)*60)
-        await ctx.send('Time is up')
+    async def countdown(self, ctx, minutes=0, *, args):
+        sender = ctx.message.author
+
+        if minutes > 0:
+            time.sleep(int(minutes))
+            await ctx.channel.send('Time is up ' + sender.mention + args)
 
 
 def setup(client):
