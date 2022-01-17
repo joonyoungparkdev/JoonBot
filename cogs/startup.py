@@ -27,7 +27,7 @@ class Startup(commands.Cog):
         sender = ctx.message.author
 
         if minutes > 0:
-            time.sleep(int(minutes))
+            time.sleep(int(minutes * 60))
             await ctx.channel.send('Time is up ' + sender.mention + args)
 
 
