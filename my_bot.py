@@ -4,12 +4,12 @@ import os
 
 import discord
 from discord.ext import commands
-from secrets import discord_token
+# from secrets import discord_token
 
 client = commands.Bot(command_prefix='!', case_insensitive=True)
 
 # DISCORD_TOKEN = discord_token
-DISCORD_TOKEN = os.environ['DISCORD_TOKEN']
+# DISCORD_TOKEN = os.environ['DISCORD_TOKEN']
 
 
 @client.event
@@ -44,4 +44,4 @@ for filename in os.listdir('./cogs'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
 
-client.run(DISCORD_TOKEN)
+client.run(discord_token)
