@@ -32,7 +32,7 @@ async def unload(ctx, extension):
 async def reload(ctx, extension):
     client.unload_extension(f'cogs.{extension}')
     client.load_extension(f'cogs.{extension}')
-    await ctx.send(f'{extension} has beenxreloaded!')
+    await ctx.send(f'{extension} has been reloaded!')
 
 
 for filename in os.listdir('./cogs'):
