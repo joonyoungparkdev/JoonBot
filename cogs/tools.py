@@ -2,6 +2,7 @@ import discord
 import time
 
 from discord.ext import commands
+from discord.utils import get
 
 
 class Tools(commands.Cog):
@@ -29,6 +30,12 @@ class Tools(commands.Cog):
         if minutes > 0:
             time.sleep(int(minutes * 60))
             await ctx.channel.send('Time is up ' + sender.mention + args)
+
+    @commands.command(aliases=['renameRole'])
+    async def rename(self, ctx):
+        sender = ctx.message.author
+        roles = sender.roles
+        print(roles)
 
 
 def setup(client):
