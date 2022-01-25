@@ -40,4 +40,4 @@ for filename in os.listdir('./cogs'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
 
-client.run('OTI5NTA2NjE4MjQzMTgyNzAy.YdoUfw._d5131t94OvDoNvZrJkM-WSxcW4')
+client.run('DISCORD_TOKEN')
