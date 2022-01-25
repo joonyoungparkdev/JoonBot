@@ -8,6 +8,7 @@ from secrets import discord_token
 
 client = commands.Bot(command_prefix='!', case_insensitive=True)
 
+# DISCORD_TOKEN = discord_token
 DISCORD_TOKEN = os.environ['DISCORD_TOKEN']
 
 
