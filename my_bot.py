@@ -4,6 +4,7 @@ import os
 
 import discord
 from discord.ext import commands
+from secrets import discord_token
 
 client = commands.Bot(command_prefix='!', case_insensitive=True)
 
