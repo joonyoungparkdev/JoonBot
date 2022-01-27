@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from discord.utils import get
 
-scanlist = ['apex legends', 'apex']
+scanlist = ['apex legends', 'apexlegends', 'apex']
 
 
 class Scanner(commands.Cog):
