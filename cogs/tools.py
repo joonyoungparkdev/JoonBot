@@ -1,4 +1,3 @@
-import discord
 import time
 
 from discord.ext import commands
@@ -13,7 +12,7 @@ class Tools(commands.Cog):
     # Commands
     @commands.command()
     async def ping(self, ctx):
-        await ctx.send('Pong!')
+        await ctx.send('Pooong!')
 
     @commands.command()
     async def echo(self, ctx, *, args):

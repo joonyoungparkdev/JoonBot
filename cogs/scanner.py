@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from discord.utils import get
 
 scanlist = ['apex legends', 'apexlegends', 'apex']
 
@@ -31,7 +30,14 @@ class Scanner(commands.Cog):
                     await payload.channel.send(":dog::poop: has been mentioned " + str(counter) + " time")
             # print(payload.content)
 
+    @commands.Cog.listener()
+    async def on_voice_state_update(self, member, before, after):
+        valorant_voice = self.client.get_channel(936645156726276186)
+        general_chat = self.client.get_channel(790748856290639882)
+        testroom = self.client.get_channel(787119681492090890)
+        if after.channel == valorant_voice:
+            await testroom.send("hit")
+
 
 def setup(client):
     client.add_cog(Scanner(client))
-
