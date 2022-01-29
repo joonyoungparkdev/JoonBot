@@ -1,6 +1,6 @@
 discord.py
 
-pip~=21.2.4
+pip~=21.3.1
 attrs~=20.3.0
 idna~=3.1
 multidict~=4.7.6
