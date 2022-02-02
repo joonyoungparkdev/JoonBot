@@ -53,7 +53,7 @@ class Scanner(commands.Cog):
                         if user.voice is None:   # if member is not already in voice
                             # print(user)
                             channel = await user.create_dm()
-                            await testroom.send(direct_message)
+                            await channel.send(direct_message)
 
             # channel = await member.create_dm()
             # await channel.send('dmd')
