@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from discord.utils import get
 
 scanlist = ['apex legends', 'apexlegends', 'apex']
 valorant_role = 'Radiants'
@@ -39,17 +38,22 @@ class Scanner(commands.Cog):
         guild = self.client.get_guild(786639331930275910)
         users = self.client.get_all_members()
         testroom = self.client.get_channel(787119681492090890)
-        if after.channel == valorant_voice:
-
+        if before.channel is None and after.channel == valorant_voice:      # only if joining channel
             for role in valorant_voice.guild.roles:     # loop thru all roles in server
                 if str(role) == valorant_role:          # if role is desired role
+                    print(valorant_voice.members)
+                    count = 0
+                    for x in valorant_voice.members:
+                        count += 1
+                    # print("count: " + str(count))
+                    direct_message = 'Tryna run some Valorant? <#936645156726276186> ~ ' + str(member)
                     for user in role.members:           # loop thru all role members
                         # print(">" + str(user))
                         # print(user.voice)
                         if user.voice is None:   # if member is not already in voice
                             # print(user)
                             channel = await user.create_dm()
-                            await channel.send('Tryna run some Valorant? <#936645156726276186> ~ ' + str(member))
+                            await testroom.send(direct_message)
 
             # channel = await member.create_dm()
             # await channel.send('dmd')
