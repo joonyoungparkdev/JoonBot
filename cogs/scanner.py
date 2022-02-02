@@ -1,7 +1,9 @@
 import discord
 from discord.ext import commands
+from discord.utils import get
 
 scanlist = ['apex legends', 'apexlegends', 'apex']
+valorant_role = 'Radiants'
 
 
 class Scanner(commands.Cog):
@@ -34,9 +36,23 @@ class Scanner(commands.Cog):
     async def on_voice_state_update(self, member, before, after):
         valorant_voice = self.client.get_channel(936645156726276186)
         general_chat = self.client.get_channel(790748856290639882)
+        guild = self.client.get_guild(786639331930275910)
+        users = self.client.get_all_members()
         testroom = self.client.get_channel(787119681492090890)
         if after.channel == valorant_voice:
-            await testroom.send("hit")
+
+            for role in valorant_voice.guild.roles:     # loop thru all roles in server
+                if str(role) == valorant_role:          # if role is desired role
+                    for user in role.members:           # loop thru all role members
+                        # print(">" + str(user))
+                        # print(user.voice)
+                        if user.voice is None:   # if member is not already in voice
+                            # print(user)
+                            channel = await user.create_dm()
+                            await testroom.send('Tryna run some Valorant? <#936645156726276186> ~ ' + str(member))
+
+            # channel = await member.create_dm()
+            # await channel.send('dmd')
 
 
 def setup(client):

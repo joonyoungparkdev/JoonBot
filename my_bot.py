@@ -4,12 +4,15 @@ import os
 
 import discord
 from discord.ext import commands
-# from secrets import discord_token
+from secrets import discord_token
 
-client = commands.Bot(command_prefix='!', case_insensitive=True)
+intents = discord.Intents.default()
+intents.presences = True
+intents.members = True
+client = commands.Bot(command_prefix='!', case_insensitive=True, intents=intents)
 
-# DISCORD_TOKEN = discord_token
-DISCORD_TOKEN = os.environ['DISCORD_TOKEN']
+DISCORD_TOKEN = discord_token
+# DISCORD_TOKEN = os.environ['DISCORD_TOKEN']
 
 
 @client.event
