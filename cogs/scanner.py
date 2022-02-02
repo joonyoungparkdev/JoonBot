@@ -49,7 +49,7 @@ class Scanner(commands.Cog):
                         if user.voice is None:   # if member is not already in voice
                             # print(user)
                             channel = await user.create_dm()
-                            await testroom.send('Tryna run some Valorant? <#936645156726276186> ~ ' + str(member))
+                            await channel.send('Tryna run some Valorant? <#936645156726276186> ~ ' + str(member))
 
             # channel = await member.create_dm()
             # await channel.send('dmd')
