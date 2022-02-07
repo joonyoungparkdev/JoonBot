@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-scanlist = ['apex legends', 'apexlegends', 'apex']
+scanlist = ['apex legends', 'apexlegends', 'apex', 'pex']
 valorant_role = 'Radiants'
 
 
