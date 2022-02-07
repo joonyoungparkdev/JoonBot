@@ -11,7 +11,7 @@ class Tools(commands.Cog):
     # Commands
     @commands.command()
     async def ping(self, ctx):
-        await ctx.send('Pong!')
+        await ctx.send('Pang!')
 
     @commands.command()
     async def echo(self, ctx, *, args):
