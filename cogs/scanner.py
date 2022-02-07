@@ -29,6 +29,8 @@ class Scanner(commands.Cog):
                     await payload.channel.send(":dog::poop: has been mentioned " + str(counter) + " times")
                 else:
                     await payload.channel.send(":dog::poop: has been mentioned " + str(counter) + " time")
+
+                return
             # print(payload.content)
 
     @commands.Cog.listener()
