@@ -24,6 +24,7 @@ class Tools(commands.Cog):
     @commands.command()
     async def countdown(self, ctx, minutes=0, *, args):
         sender = ctx.message.author
+        await ctx.channel.send('Timer started for ' + minutes + ' minutes')
 
         if minutes > 0:
             time.sleep(int(minutes * 60))
