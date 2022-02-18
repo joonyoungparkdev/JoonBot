@@ -18,8 +18,8 @@ DISCORD_TOKEN = os.environ['DISCORD_TOKEN']
 @client.event
 async def on_ready():
     print('Bot is Ready')
-    # await client.change_presence(activity=discord.Game('With Mommy Milkers'))
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Mommy Milkers"))
+    await client.change_presence(activity=discord.Game('with myself...'))
+    # await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Mommy Milkers"))
 
 
 # ex: '.load example'
