@@ -11,7 +11,7 @@ class Tools(commands.Cog):
     # Commands
     @commands.command()
     async def ping(self, ctx):
-        await ctx.send('Pang!')
+        await ctx.send('Pong!')
 
     @commands.command()
     async def echo(self, ctx, *, args):
@@ -22,12 +22,12 @@ class Tools(commands.Cog):
         await ctx.channel.purge(limit=amount+1)
 
     @commands.command()
-    async def countdown(self, ctx, minutes=0, *, args):
+    async def timer(self, ctx, minutes=0, *, args=''):
         sender = ctx.message.author
-        await ctx.channel.send('Timer started for ' + minutes + ' minutes')
+        await ctx.channel.send('Timer started for ' + str(minutes) + ' minutes')
 
         if minutes > 0:
-            time.sleep(int(minutes * 60))
+            time.sleep(int(minutes * 60))       # sleep for 60*minutes seconds
             await ctx.channel.send('Time is up ' + sender.mention + args)
 
     @commands.command(aliases=['renameRole'])
