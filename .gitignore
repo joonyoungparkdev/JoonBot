@@ -1,0 +1,4 @@
+config/secrets.json
+/screenshots/
+.env
+__pycache__/
