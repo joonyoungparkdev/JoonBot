@@ -245,7 +245,7 @@ def create_scheduled_task(bot):
     """
     from discord.ext import tasks
     
-    @tasks.loop(minutes=1)
+    @tasks.loop(minutes=30)
     async def scheduled_reservation_check():
         """
         Automatically runs the reservation check at 11:55 PM Pacific Time every night.
@@ -255,7 +255,7 @@ def create_scheduled_task(bot):
         now = datetime.now(pacific_tz)
         
         # Check if it's 11:55 PM Pacific Time
-        if (now.hour == 23 or now.hour == 21) and now.minute == 55:
+        if now.hour == 23:
             logger.info("Running scheduled reservation check")
             
             try:
