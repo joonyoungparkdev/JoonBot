@@ -29,7 +29,7 @@ def setup_driver():
     options.add_argument('--disable-dev-shm-usage')  # Required for Heroku
     options.add_argument('--disable-gpu')  # Disable GPU hardware acceleration
     options.add_argument('--remote-debugging-port=9222')  # Required for Heroku
-    options.add_argument('--user-data-dir=/tmp/chrome-user-data')  # Unique user data directory
+    # options.add_argument('--user-data-dir=/tmp/chrome-user-data')  # Unique user data directory
     options.add_argument('--disable-extensions')  # Disable extensions
     options.add_argument('--disable-plugins')  # Disable plugins
     service = Service()
