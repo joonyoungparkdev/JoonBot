@@ -1,6 +1,7 @@
 import json
 import os
 import time
+import asyncio
 from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -33,7 +34,7 @@ def get_tomorrow_label():
     tomorrow = datetime.now() + timedelta(days=1)
     return tomorrow.strftime("%b %d, %Y")
 
-def get_timeslots_for_url(name, url, tomorrow_str):
+async def get_timeslots_for_url(name, url, tomorrow_str):
     """
     Navigates to the court reservation page and extracts timeslots available for tomorrow.
 
@@ -56,7 +57,7 @@ def get_timeslots_for_url(name, url, tomorrow_str):
             (By.CSS_SELECTOR, "div.facility-detail-actual__date-time-input-field")
         ))
         date_time_button.click()
-        time.sleep(5)
+        await asyncio.sleep(1)
 
         day_selector = f"div[aria-label^='{tomorrow_str}']"
         try:
@@ -65,7 +66,7 @@ def get_timeslots_for_url(name, url, tomorrow_str):
             try:
                 more_button = day_cell.find_element(By.CSS_SELECTOR, "span.an-popper a.more-link")
                 more_button.click()
-                time.sleep(1)
+                await asyncio.sleep(1)
 
                 options_list = day_cell.find_elements(By.CSS_SELECTOR, ".menu-option-item")
                 result = [opt.text for opt in options_list if opt.text.strip()]
@@ -89,7 +90,6 @@ def get_timeslots_for_url(name, url, tomorrow_str):
         print(f"Saved screenshot for {name}: {screenshot_path}")
 
     except Exception as e:
-        driver.save_screenshot(f"error_{name}.png")
         print(f"An error occurred for {name}: {e}")
         result = []
 
@@ -98,7 +98,7 @@ def get_timeslots_for_url(name, url, tomorrow_str):
 
     return result
 
-def check_all_courts(courts_file='config/courts.json'):
+async def check_all_courts(courts_file='config/courts.json'):
     """
     Loads all court URLs from the provided JSON file, retrieves timeslots for each,
     and returns the results.
@@ -117,13 +117,13 @@ def check_all_courts(courts_file='config/courts.json'):
     results = {}
 
     for name, url in url_dict.items():
-        results[name] = get_timeslots_for_url(name, url, tomorrow_str)
+        results[name] = await get_timeslots_for_url(name, url, tomorrow_str)
 
     return results
 
 if __name__ == '__main__':
     start_time = time.time()
-    results = check_all_courts()
+    results = asyncio.run(check_all_courts())
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(results)

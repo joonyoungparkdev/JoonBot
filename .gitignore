@@ -1,4 +1,5 @@
 config/secrets.json
 /screenshots/
+/error_screenshots/
 .env
 __pycache__/
