@@ -2,10 +2,11 @@
 import os
 import discord
 from dotenv import load_dotenv
-from discord.ext import commands
+from discord.ext import commands, tasks
 import time
 import logging
 import pytz
+import json
 from datetime import datetime, timedelta
 from reservations import check_all_courts
 
@@ -27,16 +28,67 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+def load_setup_config():
+    """
+    Loads the setup configuration from config/setup.json.
+    
+    Returns:
+        dict: Configuration dictionary containing channel information.
+    """
+    try:
+        with open('config/setup.json', 'r') as f:
+            return json.load(f)
+    except Exception as e:
+        logger.error(f"Failed to load setup config: {e}")
+        return {}
+
 @bot.event
 async def on_ready():
     print(f'Bot is ready. Logged in as {bot.user}')
     logger.info(f'Bot is ready. Logged in as {bot.user}')
+    # Start the scheduled task
+    scheduled_reservation_check.start()
 
-@bot.command()
-async def runscript(ctx):
+@tasks.loop(minutes=1)
+async def scheduled_reservation_check():
+    """
+    Automatically runs the reservation check at 11:55 PM Pacific Time every night.
+    Checks every minute to ensure precise timing.
+    """
+    pacific_tz = pytz.timezone('US/Pacific')
+    now = datetime.now(pacific_tz)
+    logger.info(f"Current time: {now}")
+    
+    # Check if it's 11:55 PM Pacific Time
+    if (now.hour == 23 or now.hour == 21) and now.minute == 55:
+        logger.info("Running scheduled reservation check at 11:55 PM Pacific Time")
+        
+        try:
+            # Load setup configuration
+            setup_config = load_setup_config()
+            
+            # Get the tennis channel from config
+            if 'Tennis_Channel' in setup_config:
+                channel_id = setup_config['Tennis_Channel']['Channel_ID']
+                channel = bot.get_channel(int(channel_id))
+                
+                if channel:
+                    await run_reservation_check(channel)
+                else:
+                    logger.error(f"Could not find channel with ID: {channel_id}")
+            else:
+                logger.error("Tennis_Channel configuration not found in setup.json")
+                        
+        except Exception as e:
+            logger.error(f"Error in scheduled reservation check: {e}")
+
+async def run_reservation_check(channel):
+    """
+    Runs the reservation check and sends results to the specified channel.
+    """
     try:
-        await ctx.send('Starting reservation retrieval...')
-        logger.info('Starting reservation retrieval...')
+        await channel.send('Starting scheduled reservation retrieval...')
+        logger.info('Starting scheduled reservation retrieval...')
 
         start_time = time.time()
         results = await check_all_courts()
@@ -55,7 +107,7 @@ async def runscript(ctx):
                 formatted_results += f'**{court_name}**: No available timeslots\n'
         formatted_results += f"Script completed in {elapsed_time:.2f} seconds"
 
-        await ctx.send(formatted_results)
+        await channel.send(formatted_results)
         
         # Send screenshots
         screenshots_dir = "screenshots"
@@ -72,24 +124,38 @@ async def runscript(ctx):
                         logger.error(f"Failed to prepare screenshot {screenshot_file}: {e}")
                         logger.error(f"Error type: {type(e).__name__}")
                         logger.error(f"Error details: {str(e)}")
-                        await ctx.send(f"Failed to prepare screenshot {screenshot_file}")
+                        await channel.send(f"Failed to prepare screenshot {screenshot_file}")
                 
                 if files:
                     try:
-                        await ctx.send(files=files)
+                        await channel.send(files=files)
                         logger.info(f"Successfully sent {len(files)} screenshots")
                     except Exception as e:
                         logger.error(f"Failed to send screenshots: {e}")
                         logger.error(f"Error type: {type(e).__name__}")
                         logger.error(f"Error details: {str(e)}")
-                        await ctx.send("Failed to send screenshots")
+                        await channel.send("Failed to send screenshots")
             else:
                 logger.warning("No screenshot files found in screenshots directory")
-                await ctx.send("No screenshots found.")
+                await channel.send("No screenshots found.")
         else:
             logger.warning("Screenshots directory does not exist")
-            await ctx.send("Screenshots directory not found.")
+            await channel.send("Screenshots directory not found.")
             
+    except Exception as e:
+        logger.error(f"An error occurred in scheduled reservation check: {e}")
+        logger.error(f"Error type: {type(e).__name__}")
+        logger.error(f"Error details: {str(e)}")
+        import traceback
+        logger.error(f"Full traceback: {traceback.format_exc()}")
+        await channel.send(f"An error occurred: {e}")
+
+    logger.info('Scheduled script complete')
+
+@bot.command()
+async def runscript(ctx):
+    try:
+        await run_reservation_check(ctx.channel)
     except Exception as e:
         logger.error(f"An error occurred in runscript command: {e}")
         logger.error(f"Error type: {type(e).__name__}")
