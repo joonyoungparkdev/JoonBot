@@ -149,5 +149,6 @@ if __name__ == '__main__':
     results = asyncio.run(check_all_courts())
     end_time = time.time()
     elapsed_time = end_time - start_time
+    
     print(results)
     print(f"Script completed in {elapsed_time:.2f} seconds")
