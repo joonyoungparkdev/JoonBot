@@ -4,6 +4,7 @@ import time
 import asyncio
 import logging
 import tempfile
+import uuid
 from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -22,7 +23,9 @@ def setup_driver():
     Returns:
         webdriver.Chrome: Configured Chrome WebDriver instance.
     """
-    user_data_dir = tempfile.mkdtemp()
+    # Create a unique user data directory using timestamp and UUID
+    unique_id = f"chrome_{int(time.time())}_{uuid.uuid4().hex[:8]}"
+    user_data_dir = os.path.join(tempfile.gettempdir(), unique_id)
     
     options = Options()
     options.add_argument('--headless')
