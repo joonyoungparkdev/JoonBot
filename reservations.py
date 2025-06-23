@@ -5,6 +5,7 @@ import asyncio
 import logging
 import tempfile
 import uuid
+import pytz
 from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -43,12 +44,14 @@ def setup_driver():
 
 def get_tomorrow_label():
     """
-    Returns the formatted date string for tomorrow to match the webpage's aria-label format.
+    Returns the formatted date string for tomorrow in Pacific Time to match the webpage's aria-label format.
 
     Returns:
-        str: Date string formatted as 'Mon DD, YYYY' (e.g., 'Jun 23, 2025').
+        str: Date string formatted as 'Mon DD, YYYY' (e.g., 'Jun 23, 2025') in Pacific Time.
     """
-    tomorrow = datetime.now() + timedelta(days=1)
+    pacific_tz = pytz.timezone('US/Pacific')
+    tomorrow = datetime.now(pacific_tz) + timedelta(days=1)
+    logger.info(f"Tomorrow: {tomorrow}")
     return tomorrow.strftime("%b %d, %Y")
 
 async def get_timeslots_for_url(name, url, tomorrow_str):
