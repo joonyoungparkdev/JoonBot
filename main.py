@@ -87,8 +87,8 @@ async def run_reservation_check(channel):
     Runs the reservation check and sends results to the specified channel.
     """
     try:
-        await channel.send('Starting scheduled reservation retrieval...')
-        logger.info('Starting scheduled reservation retrieval...')
+        await channel.send('Starting manual reservation retrieval...')
+        logger.info('Starting manual reservation retrieval...')
 
         start_time = time.time()
         results = await check_all_courts()
