@@ -32,44 +32,60 @@ async def on_ready():
 
 @bot.command()
 async def runscript(ctx):
-    await ctx.send('Starting reservation retrieval...')
-    logger.info('Starting reservation retrieval...')
+    try:
+        await ctx.send('Starting reservation retrieval...')
+        logger.info('Starting reservation retrieval...')
 
-    start_time = time.time()
-    results = await check_all_courts()
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-    
-    await ctx.send(f'Script executed! Output:\n{results}')
-    await ctx.send(f"Script completed in {elapsed_time:.2f} seconds")
-    
-    # Send screenshots
-    screenshots_dir = "screenshots"
-    if os.path.exists(screenshots_dir):
-        screenshot_files = [f for f in os.listdir(screenshots_dir) if f.endswith('.png')]
-        if screenshot_files:
-            await ctx.send("Screenshots:")
-            # Send all screenshots in one message
-            files = []
-            for screenshot_file in screenshot_files:
-                screenshot_path = os.path.join(screenshots_dir, screenshot_file)
-                try:
-                    files.append(discord.File(screenshot_path))
-                except Exception as e:
-                    logger.error(f"Failed to prepare screenshot {screenshot_file}: {e}")
-                    await ctx.send(f"Failed to prepare screenshot {screenshot_file}")
-            
-            if files:
-                try:
-                    await ctx.send(files=files)
-                except Exception as e:
-                    logger.error(f"Failed to send screenshots: {e}")
-                    await ctx.send("Failed to send screenshots")
+        start_time = time.time()
+        results = await check_all_courts()
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        
+        await ctx.send(f'Script executed! Output:\n{results}')
+        await ctx.send(f"Script completed in {elapsed_time:.2f} seconds")
+        
+        # Send screenshots
+        screenshots_dir = "screenshots"
+        if os.path.exists(screenshots_dir):
+            screenshot_files = [f for f in os.listdir(screenshots_dir) if f.endswith('.png')]
+            if screenshot_files:
+                await ctx.send("Screenshots:")
+                # Send all screenshots in one message
+                files = []
+                for screenshot_file in screenshot_files:
+                    screenshot_path = os.path.join(screenshots_dir, screenshot_file)
+                    try:
+                        files.append(discord.File(screenshot_path))
+                    except Exception as e:
+                        logger.error(f"Failed to prepare screenshot {screenshot_file}: {e}")
+                        logger.error(f"Error type: {type(e).__name__}")
+                        logger.error(f"Error details: {str(e)}")
+                        await ctx.send(f"Failed to prepare screenshot {screenshot_file}")
+                
+                if files:
+                    try:
+                        await ctx.send(files=files)
+                        logger.info(f"Successfully sent {len(files)} screenshots")
+                    except Exception as e:
+                        logger.error(f"Failed to send screenshots: {e}")
+                        logger.error(f"Error type: {type(e).__name__}")
+                        logger.error(f"Error details: {str(e)}")
+                        await ctx.send("Failed to send screenshots")
+            else:
+                logger.warning("No screenshot files found in screenshots directory")
+                await ctx.send("No screenshots found.")
         else:
-            await ctx.send("No screenshots found.")
-    else:
-        await ctx.send("Screenshots directory not found.")
-    
+            logger.warning("Screenshots directory does not exist")
+            await ctx.send("Screenshots directory not found.")
+            
+    except Exception as e:
+        logger.error(f"An error occurred in runscript command: {e}")
+        logger.error(f"Error type: {type(e).__name__}")
+        logger.error(f"Error details: {str(e)}")
+        import traceback
+        logger.error(f"Full traceback: {traceback.format_exc()}")
+        await ctx.send(f"An error occurred: {e}")
+
     logger.info('Script complete')
 
 bot.run(TOKEN)

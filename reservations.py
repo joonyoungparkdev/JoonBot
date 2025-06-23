@@ -2,6 +2,7 @@ import json
 import os
 import time
 import asyncio
+import logging
 from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -9,6 +10,9 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
+# Setup logging
+logger = logging.getLogger(__name__)
 
 def setup_driver():
     """
@@ -87,10 +91,12 @@ async def get_timeslots_for_url(name, url, tomorrow_str):
 
         screenshot_path = os.path.join("screenshots", f"{name}.png")
         driver.save_screenshot(screenshot_path)
-        print(f"Saved screenshot for {name}: {screenshot_path}")
+        logger.info(f"Saved screenshot for {name}: {screenshot_path}")
+        logger.info(f"Found {len(result)} timeslots for {name}: {result}")
 
     except Exception as e:
         print(f"An error occurred for {name}: {e}")
+        logger.error(f"An error occurred for {name}: {e}")
         result = []
 
     finally:
