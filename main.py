@@ -57,7 +57,6 @@ async def scheduled_reservation_check():
     """
     pacific_tz = pytz.timezone('US/Pacific')
     now = datetime.now(pacific_tz)
-    logger.info(f"Current time: {now}")
     
     # Check if it's 11:55 PM Pacific Time
     if (now.hour == 23 or now.hour == 21) and now.minute == 55:
