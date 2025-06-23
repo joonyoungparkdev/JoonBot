@@ -1,4 +1,4 @@
-config/secrets.json
+tennis_reservations/config/secrets.json
 /screenshots/
 /error_screenshots/
 .env

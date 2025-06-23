@@ -20,13 +20,13 @@ logger = logging.getLogger(__name__)
 
 def load_setup_config():
     """
-    Loads the setup configuration from config/setup.json.
+    Loads the setup configuration from tennis_reservations/config/setup.json.
     
     Returns:
         dict: Configuration dictionary containing channel information.
     """
     try:
-        with open('config/setup.json', 'r') as f:
+        with open('tennis_reservations/config/setup.json', 'r') as f:
             return json.load(f)
     except Exception as e:
         logger.error(f"Failed to load setup config: {e}")
@@ -135,7 +135,7 @@ async def get_timeslots_for_url(name, url, tomorrow_str):
 
     return result
 
-async def check_all_courts(courts_file='config/courts.json'):
+async def check_all_courts(courts_file='tennis_reservations/config/courts.json'):
     """
     Loads all court URLs from the provided JSON file, retrieves timeslots for each,
     and returns the results.
@@ -255,7 +255,7 @@ def create_scheduled_task(bot):
         now = datetime.now(pacific_tz)
         
         # Check if it's 11:55 PM Pacific Time
-        if (now.hour == 23 or now.hour == 21) and now.minute == 1:
+        if (now.hour == 23 or now.hour == 21) and now.minute == 55:
             logger.info("Running scheduled reservation check at 11:55 PM Pacific Time")
             
             try:

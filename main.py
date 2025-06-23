@@ -4,7 +4,7 @@ import discord
 from dotenv import load_dotenv
 from discord.ext import commands
 import logging
-from reservations import run_reservation_check, create_scheduled_task
+from tennis_reservations.reservations import run_reservation_check, create_scheduled_task
 
 # Load token from config/secrets.json
 load_dotenv()  # Load from .env
