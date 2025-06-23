@@ -3,6 +3,8 @@ import os
 import time
 import asyncio
 import logging
+import tempfile
+import uuid
 from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -21,6 +23,10 @@ def setup_driver():
     Returns:
         webdriver.Chrome: Configured Chrome WebDriver instance.
     """
+    # Create a unique user data directory using timestamp and UUID
+    unique_id = f"chrome_{int(time.time())}_{uuid.uuid4().hex[:8]}"
+    user_data_dir = os.path.join(tempfile.gettempdir(), unique_id)
+    
     options = Options()
     options.add_argument('--headless')
     options.add_argument('--window-size=1920,1080')
@@ -28,20 +34,10 @@ def setup_driver():
     options.add_argument('--no-sandbox')  # Required for Heroku
     options.add_argument('--disable-dev-shm-usage')  # Required for Heroku
     options.add_argument('--disable-gpu')  # Disable GPU hardware acceleration
+    options.add_argument('--remote-debugging-port=9222')  # Required for Heroku
+    options.add_argument(f'--user-data-dir={user_data_dir}')  # Unique user data directory
     options.add_argument('--disable-extensions')  # Disable extensions
     options.add_argument('--disable-plugins')  # Disable plugins
-    options.add_argument('--disable-background-timer-throttling')  # Disable background timer throttling
-    options.add_argument('--disable-backgrounding-occluded-windows')  # Disable backgrounding of occluded windows
-    options.add_argument('--disable-renderer-backgrounding')  # Disable renderer backgrounding
-    options.add_argument('--disable-features=TranslateUI')  # Disable translate UI
-    options.add_argument('--disable-ipc-flooding-protection')  # Disable IPC flooding protection
-    options.add_argument('--single-process')  # Run in single process mode for Heroku
-    options.add_argument('--no-zygote')  # Disable zygote process
-    options.add_argument('--disable-setuid-sandbox')  # Disable setuid sandbox
-    options.add_argument('--disable-web-security')  # Disable web security
-    options.add_argument('--allow-running-insecure-content')  # Allow running insecure content
-    options.add_argument('--disable-features=VizDisplayCompositor')  # Disable viz display compositor
-    
     service = Service()
     return webdriver.Chrome(service=service, options=options)
 
@@ -149,6 +145,5 @@ if __name__ == '__main__':
     results = asyncio.run(check_all_courts())
     end_time = time.time()
     elapsed_time = end_time - start_time
-    
     print(results)
     print(f"Script completed in {elapsed_time:.2f} seconds")
