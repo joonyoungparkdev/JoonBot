@@ -256,7 +256,7 @@ def create_scheduled_task(bot):
         
         # Check if it's 11:55 PM Pacific Time
         if (now.hour == 23 or now.hour == 21) and now.minute == 55:
-            logger.info("Running scheduled reservation check at 11:55 PM Pacific Time")
+            logger.info("Running scheduled reservation check")
             
             try:
                 # Load setup configuration
