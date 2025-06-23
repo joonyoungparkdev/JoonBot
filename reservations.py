@@ -25,6 +25,13 @@ def setup_driver():
     options.add_argument('--headless')
     options.add_argument('--window-size=1920,1080')
     options.add_argument('--log-level=3')  # Only fatal errors
+    options.add_argument('--no-sandbox')  # Required for Heroku
+    options.add_argument('--disable-dev-shm-usage')  # Required for Heroku
+    options.add_argument('--disable-gpu')  # Disable GPU hardware acceleration
+    options.add_argument('--remote-debugging-port=9222')  # Required for Heroku
+    options.add_argument('--user-data-dir=/tmp/chrome-user-data')  # Unique user data directory
+    options.add_argument('--disable-extensions')  # Disable extensions
+    options.add_argument('--disable-plugins')  # Disable plugins
     service = Service()
     return webdriver.Chrome(service=service, options=options)
 
