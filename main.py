@@ -7,8 +7,11 @@ import time
 from reservations import check_all_courts
 
 # Load token from config/secrets.json
-with open('config/secrets.json') as f:
-    secrets = json.load(f)
+try:
+    with open('config/secrets.json') as f:
+        secrets = json.load(f)
+except:
+    print("secrets.json not found")
 
 # TOKEN = secrets["token"]    # for local testing
 TOKEN = os.environ['DISCORD_TOKEN']  # Get from environment variable
