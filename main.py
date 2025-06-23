@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 from discord.ext import commands
 import time
 import logging
+import pytz
+from datetime import datetime, timedelta
 from reservations import check_all_courts
 
 # Load token from config/secrets.json
@@ -40,16 +42,26 @@ async def runscript(ctx):
         results = await check_all_courts()
         end_time = time.time()
         elapsed_time = end_time - start_time
+
+        pacific_tz = pytz.timezone('US/Pacific')
+        tomorrow = datetime.now(pacific_tz) + timedelta(days=1)
         
-        await ctx.send(f'Script executed! Output:\n{results}')
-        await ctx.send(f"Script completed in {elapsed_time:.2f} seconds")
+        # Format results with each court on a new line
+        formatted_results = f'Availability for {tomorrow.strftime("%b %d, %Y")}:\n'
+        for court_name, timeslots in results.items():
+            if timeslots:
+                formatted_results += f'**{court_name}**: {", ".join(timeslots)}\n'
+            else:
+                formatted_results += f'**{court_name}**: No available timeslots\n'
+        formatted_results += f"Script completed in {elapsed_time:.2f} seconds"
+
+        await ctx.send(formatted_results)
         
         # Send screenshots
         screenshots_dir = "screenshots"
         if os.path.exists(screenshots_dir):
             screenshot_files = [f for f in os.listdir(screenshots_dir) if f.endswith('.png')]
             if screenshot_files:
-                await ctx.send("Screenshots:")
                 # Send all screenshots in one message
                 files = []
                 for screenshot_file in screenshot_files:
