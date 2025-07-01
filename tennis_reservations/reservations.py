@@ -62,12 +62,12 @@ def get_tomorrow_label():
     Returns the formatted date string for tomorrow in Pacific Time to match the webpage's aria-label format.
 
     Returns:
-        str: Date string formatted as 'Mon DD, YYYY' (e.g., 'Jun 23, 2025') in Pacific Time.
+        str: Date string formatted as 'Mon D, YYYY' (e.g., 'Jun 2, 2025') in Pacific Time.
     """
     pacific_tz = pytz.timezone('US/Pacific')
     tomorrow = datetime.now(pacific_tz) + timedelta(days=1)
     logger.info(f"Tomorrow: {tomorrow}")
-    return tomorrow.strftime("%b %d, %Y")
+    return tomorrow.strftime("%b %#d, %Y")
 
 async def get_timeslots_for_url(name, url, tomorrow_str):
     """
@@ -151,6 +151,7 @@ async def check_all_courts(courts_file='tennis_reservations/config/courts.json')
 
     os.makedirs("screenshots", exist_ok=True)
     tomorrow_str = get_tomorrow_label()
+    print(tomorrow_str)
     results = {}
 
     for name, url in url_dict.items():
